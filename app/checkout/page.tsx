@@ -21,10 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/hooks/use-toast"
 
 export default function CheckoutPage() {
-  const { addToast } = useToast();
+  const { toast } = useToast();
   const [step, setStep] = useState(1)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,7 +32,7 @@ export default function CheckoutPage() {
     if (step < 3) {
       setStep(step + 1)
     } else {
-      addToast({
+      toast({
         title: "Order Placed Successfully",
         description: "Thank you for your purchase!",
       })

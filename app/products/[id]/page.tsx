@@ -26,25 +26,26 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="container px-4 md:px-6 py-8">
+    <div className="flex w-full px-4 md:px-6 py-8">
       <Link href="/products" className="inline-flex items-center text-sm mb-6 hover:text-primary">
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Products
       </Link>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid w-full md:grid-cols-2 gap-8">
         {/* Product Image */}
         <div className="relative aspect-square">
           <Image
             src={product.image}
             alt={product.name}
-            layout="fill"
+            width={50}
+            height={50}
             className="object-cover w-full h-full rounded-lg"
           />
         </div>
 
         {/* Product Info */}
-        <div className="space-y-6">
+        <div className="flex flex-col w-full h-full space-y-6">
           <div>
             <Badge className="mb-2">{product.category}</Badge>
             <h1 className="text-3xl font-bold">{product.name}</h1>

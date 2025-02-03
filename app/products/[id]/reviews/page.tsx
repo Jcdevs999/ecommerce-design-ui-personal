@@ -1,5 +1,4 @@
-
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,12 +6,12 @@ import {
   CardHeader,
   CardTitle,
   CardFooter,
-} from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Star, ThumbsUp, MessageCircle } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+} from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Star, ThumbsUp, MessageCircle } from "lucide-react";
+import ReviewForm from "@/components/ReviewForm";
 
 // Mock reviews data
 const reviews = [
@@ -46,7 +45,7 @@ const reviews = [
     helpful: 15,
     verified: true
   }
-]
+];
 
 const calculateAverageRating = () => {
   const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
@@ -62,16 +61,6 @@ const getRatingDistribution = () => {
 };
 
 export default function ProductReviewsPage({ params }: { params: { id: string } }) {
-  const { toast } = useToast();
-
-  const handleSubmitReview = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Review Submitted",
-      description: "Thank you for your feedback!",
-    });
-  };
-
   return (
     <div className="container px-4 md:px-6 py-8">
       <div className="grid gap-8 md:grid-cols-3">
@@ -128,58 +117,7 @@ export default function ProductReviewsPage({ params }: { params: { id: string } 
         {/* Reviews List and Form */}
         <div className="md:col-span-2 space-y-6">
           {/* Write a Review */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Write a Review</CardTitle>
-              <CardDescription>
-                Share your experience with this product
-              </CardDescription>
-            </CardHeader>
-            <form onSubmit={handleSubmitReview}>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label>Rating</Label>
-                  <div className="flex gap-1 mt-2">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button
-                        key={star}
-                        type="button"
-                        className="focus:outline-none"
-                      >
-                        <Star
-                          className={`w-6 h-6 ${
-                            star <= 0
-                              ? "fill-yellow-400 text-yellow-400"
-                              : "text-gray-300"
-                          }`}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="title">Review Title</Label>
-                  <input
-                    id="title"
-                    className="w-full mt-2 p-2 border rounded-md"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="comment">Your Review</Label>
-                  <Textarea
-                    id="comment"
-                    className="mt-2"
-                    rows={4}
-                    required
-                  />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button type="submit">Submit Review</Button>
-              </CardFooter>
-            </form>
-          </Card>
+          <ReviewForm />
 
           {/* Reviews List */}
           <div className="space-y-4">
