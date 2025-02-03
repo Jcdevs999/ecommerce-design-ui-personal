@@ -1,17 +1,14 @@
-"use client"
-
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   Package,
   Truck,
@@ -20,80 +17,89 @@ import {
   MapPin,
   Clock,
   Star,
-} from "lucide-react"
+} from "lucide-react";
 
 // Mock order data
-const orderDetails = {
-  id: "ORD-123456",
-  date: "2024-03-15 14:30",
-  status: "In Transit",
-  total: 259.97,
-  items: [
-    {
-      id: 1,
-      title: "Premium Wireless Headphones",
-      price: 199.99,
-      quantity: 1,
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
-    },
-    {
-      id: 2,
-      title: "Organic Cotton T-Shirt",
-      price: 29.99,
-      quantity: 2,
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80",
-    }
-  ],
-  tracking: {
-    number: "TRK789012345",
-    carrier: "FedEx",
-    estimatedDelivery: "2024-03-18",
-    currentLocation: "Distribution Center, Chicago",
-    updates: [
+const orders = [
+  {
+    id: "ORD-123456",
+    date: "2024-03-15 14:30",
+    status: "In Transit",
+    total: 259.97,
+    items: [
       {
-        date: "2024-03-15 14:30",
-        status: "Order Placed",
-        location: "Online"
+        id: 1,
+        title: "Premium Wireless Headphones",
+        price: 199.99,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
       },
       {
-        date: "2024-03-15 16:45",
-        status: "Order Confirmed",
-        location: "Seller Warehouse"
-      },
-      {
-        date: "2024-03-16 09:15",
-        status: "Package Picked Up",
-        location: "Seller Warehouse"
-      },
-      {
-        date: "2024-03-16 15:30",
-        status: "In Transit",
-        location: "Distribution Center, Chicago"
+        id: 2,
+        title: "Organic Cotton T-Shirt",
+        price: 29.99,
+        quantity: 2,
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80",
       }
-    ]
+    ],
+    tracking: {
+      number: "TRK789012345",
+      carrier: "FedEx",
+      estimatedDelivery: "2024-03-18",
+      currentLocation: "Distribution Center, Chicago",
+      updates: [
+        {
+          date: "2024-03-15 14:30",
+          status: "Order Placed",
+          location: "Online"
+        },
+        {
+          date: "2024-03-15 16:45",
+          status: "Order Confirmed",
+          location: "Seller Warehouse"
+        },
+        {
+          date: "2024-03-16 09:15",
+          status: "Package Picked Up",
+          location: "Seller Warehouse"
+        },
+        {
+          date: "2024-03-16 15:30",
+          status: "In Transit",
+          location: "Distribution Center, Chicago"
+        }
+      ]
+    },
+    shipping: {
+      address: "123 Main St",
+      city: "New York",
+      state: "NY",
+      zipCode: "10001",
+      country: "United States"
+    }
   },
-  shipping: {
-    address: "123 Main St",
-    city: "New York",
-    state: "NY",
-    zipCode: "10001",
-    country: "United States"
-  }
-}
+  // Add more orders here if needed
+];
 
 export default function OrderTrackingPage({ params }: { params: { id: string } }) {
+  const orderDetails = orders.find((order) => order.id === params.id);
+
+  if (!orderDetails) {
+    return <div>Order not found</div>;
+  }
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "Order Placed":
-        return <Package className="h-5 w-5" />
+        return <Package className="h-5 w-5" />;
       case "In Transit":
-        return <Truck className="h-5 w-5" />
+        return <Truck className="h-5 w-5" />;
       case "Delivered":
-        return <CheckCircle2 className="h-5 w-5" />
+        return <CheckCircle2 className="h-5 w-5" />;
       default:
-        return <Clock className="h-5 w-5" />
+        return <Clock className="h-5 w-5" />;
     }
-  }
+  };
 
   return (
     <div className="container px-4 md:px-6 py-8">
@@ -229,5 +235,11 @@ export default function OrderTrackingPage({ params }: { params: { id: string } }
         </div>
       </div>
     </div>
-  )
+  );
+}
+
+export async function generateStaticParams() {
+  return orders.map((order) => ({
+    id: order.id,
+  }));
 }

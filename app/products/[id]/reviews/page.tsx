@@ -1,6 +1,4 @@
-"use client"
 
-import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -64,25 +62,15 @@ const getRatingDistribution = () => {
 };
 
 export default function ProductReviewsPage({ params }: { params: { id: string } }) {
-  const [newReview, setNewReview] = useState({
-    rating: 0,
-    title: "",
-    comment: ""
-  })
-  const { toast } = useToast()
-
-  const handleRatingClick = (rating: number) => {
-    setNewReview(prev => ({ ...prev, rating }))
-  }
+  const { toast } = useToast();
 
   const handleSubmitReview = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     toast({
       title: "Review Submitted",
       description: "Thank you for your feedback!",
-    })
-    setNewReview({ rating: 0, title: "", comment: "" })
-  }
+    });
+  };
 
   return (
     <div className="container px-4 md:px-6 py-8">
@@ -156,12 +144,11 @@ export default function ProductReviewsPage({ params }: { params: { id: string } 
                       <button
                         key={star}
                         type="button"
-                        onClick={() => handleRatingClick(star)}
                         className="focus:outline-none"
                       >
                         <Star
                           className={`w-6 h-6 ${
-                            star <= newReview.rating
+                            star <= 0
                               ? "fill-yellow-400 text-yellow-400"
                               : "text-gray-300"
                           }`}
@@ -175,10 +162,6 @@ export default function ProductReviewsPage({ params }: { params: { id: string } 
                   <input
                     id="title"
                     className="w-full mt-2 p-2 border rounded-md"
-                    value={newReview.title}
-                    onChange={(e) =>
-                      setNewReview(prev => ({ ...prev, title: e.target.value }))
-                    }
                     required
                   />
                 </div>
@@ -188,10 +171,6 @@ export default function ProductReviewsPage({ params }: { params: { id: string } 
                     id="comment"
                     className="mt-2"
                     rows={4}
-                    value={newReview.comment}
-                    onChange={(e) =>
-                      setNewReview(prev => ({ ...prev, comment: e.target.value }))
-                    }
                     required
                   />
                 </div>
@@ -255,5 +234,19 @@ export default function ProductReviewsPage({ params }: { params: { id: string } 
         </div>
       </div>
     </div>
-  )
+  );
+}
+
+export async function generateStaticParams() {
+  // Assuming you have a products array with ids
+  const products = [
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    // Add more products here
+  ];
+
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
 }

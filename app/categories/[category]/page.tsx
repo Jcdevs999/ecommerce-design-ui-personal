@@ -1,4 +1,3 @@
-"use client";
 
 import { ProductCard } from "@/components/product-card";
 import { categories, products } from "@/lib/data";
@@ -36,4 +35,10 @@ export default function CategoryPage({
       </div>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  return categories.map((category) => ({
+    category: category.name.toLowerCase().replace(/ & /g, "-"),
+  }));
 }

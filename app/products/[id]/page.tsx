@@ -1,52 +1,30 @@
-"use client";
-
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs"
-import { Star, Truck, Shield, ArrowLeft } from "lucide-react"
-import Link from "next/link"
+} from "@/components/ui/tabs";
+import { Star, Truck, Shield, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
-
-// Mock product data
-const product = {
-  id: 1,
-  title: "Premium Wireless Headphones",
-  price: 199.99,
-  rating: 4.8,
-  reviews: 245,
-  image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
-  category: "Electronics",
-  description: "Experience premium sound quality with these wireless headphones. Featuring active noise cancellation, long battery life, and comfortable design.",
-  features: [
-    "Active Noise Cancellation",
-    "40-hour battery life",
-    "Quick charging - 5 mins for 2 hours playback",
-    "Bluetooth 5.0",
-    "Built-in voice assistant"
-  ],
-  specifications: {
-    "Brand": "AudioTech",
-    "Model": "WH-1000",
-    "Color": "Midnight Black",
-    "Connectivity": "Wireless",
-    "Battery": "Lithium-ion",
-    "Weight": "250g"
-  }
-}
+import { products } from "@/lib/data"; // Assuming you have a data file with products
 
 export default function ProductPage({ params }: { params: { id: string } }) {
+  const product = products.find((p) => p.id.toString() === params.id);
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
   return (
     <div className="container px-4 md:px-6 py-8">
       <Link href="/products" className="inline-flex items-center text-sm mb-6 hover:text-primary">
@@ -59,7 +37,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="relative aspect-square">
           <Image
             src={product.image}
-            alt={product.title}
+            alt={product.name}
             layout="fill"
             className="object-cover w-full h-full rounded-lg"
           />
@@ -69,7 +47,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="space-y-6">
           <div>
             <Badge className="mb-2">{product.category}</Badge>
-            <h1 className="text-3xl font-bold">{product.title}</h1>
+            <h1 className="text-3xl font-bold">{product.name}</h1>
             <div className="flex items-center mt-2 space-x-2">
               <div className="flex items-center">
                 <Star className="w-5 h-5 fill-current text-yellow-400" />
@@ -141,5 +119,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
-  )
+  );
+}
+
+export async function generateStaticParams() {
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
 }

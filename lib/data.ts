@@ -19,7 +19,7 @@ export const categories = [
   { name: "Automotive", icon: Car, count: 340 },
 ];
 
-export const products = [
+export const product = [
   {
     id: 1,
     name: "Smartphone X",
@@ -83,5 +83,42 @@ export const products = [
     price: 39,
     image: "/placeholder.svg",
   },
-  // Add more products as needed
+
+];
+
+// Mock product data
+export const products = [
+  {
+    id: 1,
+    name: "Premium Wireless Headphones",
+    category: "Electronics",
+    price: 199.99,
+    image: "/e-commerce-assets/headset.jpg",
+    description: "High-quality wireless headphones with noise cancellation.",
+    rating: 4.8,
+    reviews: 120,
+    features: ["Noise cancellation", "Bluetooth 5.0", "20 hours battery life"],
+    specifications: {
+      "Battery Life": "20 hours",
+      "Bluetooth Version": "5.0",
+      Weight: "250g",
+    },
+  },
+  {
+    id: 2,
+    name: "Organic Cotton T-Shirt",
+    category: "Fashion",
+    price: 29.99,
+    image: "/e-commerce-assets/tshirt.jpg",
+    description: "Comfortable and sustainable cotton t-shirt.",
+    rating: 4.5,
+    reviews: 80,
+    features: ["100% organic cotton", "Machine washable", "Eco-friendly"],
+    specifications: {
+      Material: "100% Organic Cotton",
+      Sizes: "S, M, L, XL",
+      Color: "White",
+    },
+  },
+  // Add more products here
 ];
